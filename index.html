@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoCollect Dashboard</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #26352c;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* LEFT SIDEBAR */
+.sidebar {
+    width: 240px;
+    background: #103b2a;
+    color: white;
+    padding: 25px 15px;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #a8f0bd;
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+.logo span {
+    display: block;
+    font-size: 11px;
+    color: #c9dfd1;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+.sidebar h4 {
+    color: #a8cbb5;
+    font-size: 11px;
+    margin: 15px 10px;
+    text-transform: uppercase;
+}
+
+.nav-btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 7px;
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: left;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    background: #d7f7e2;
+    color: #10452b;
+    font-weight: bold;
+}
+
+/* RIGHT CONTENT */
+.main {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar {
+    background: white;
+    padding: 22px 30px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar h2 {
+    font-size: 22px;
+}
+
+.tag {
+    background: #e4f6e9;
+    color: #17683b;
+    padding: 9px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.content {
+    padding: 30px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+h1 {
+    font-size: 34px;
+    margin: 12px 0;
+    color: #16482e;
+}
+
+h3 {
+    margin-bottom: 12px;
+}
+
+p {
+    color: #66736a;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.eyebrow {
+    color: #16834a;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero {
+    background: linear-gradient(120deg, #e0f6e7, #f9fffa);
+    padding: 35px;
+    border-radius: 16px;
+    border: 1px solid #ccebd5;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero h1 {
+    font-size: 38px;
+}
+
+.hero-icon {
+    font-size: 100px;
+}
+
+button.action {
+    background: #16834a;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px 5px 5px 0;
+}
+
+button.action:hover {
+    background: #0e6035;
+}
+
+.section-title {
+    margin: 30px 0 16px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e0e6e1;
+    padding: 22px;
+    border-radius: 12px;
+}
+
+.card .icon {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    color: #244a32;
+}
+
+.card p {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.info-box {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e0e6e1;
+}
+
+.info-box.advantages {
+    border-top: 5px solid #27a568;
+}
+
+.info-box.disadvantages {
+    border-top: 5px solid #e5a13b;
+}
+
+.info-box ul {
+    padding-left: 20px;
+}
+
+.info-box li {
+    margin-bottom: 13px;
+    line-height: 1.6;
+    color: #58665d;
+}
+
+form {
+    background: white;
+    padding: 25px;
+    border: 1px solid #e0e6e1;
+    border-radius: 12px;
+    max-width: 750px;
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 15px 0 7px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd5ce;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #b8e6c7;
+    border-color: #16834a;
+}
+
+.notice {
+    background: #fff7e5;
+    padding: 13px;
+    border-radius: 8px;
+    color: #76591d;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 18px 0;
+}
+
+#result {
+    display: none;
+    padding: 14px;
+    margin-top: 15px;
+    background: #e4f6e9;
+    color: #17683b;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+footer {
+    margin-top: 35px;
+    padding-top: 18px;
+    border-top: 1px solid #ddd;
+    color: #78857b;
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .logo {
+        margin-bottom: 12px;
+    }
+
+    .sidebar h4 {
+        display: none;
+    }
+
+    .nav-list {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+    }
+
+    .nav-btn {
+        width: auto;
+        white-space: nowrap;
+        margin-bottom: 0;
+    }
+
+    .topbar {
+        padding: 18px;
+    }
+
+    .tag {
+        display: none;
+    }
+
+    .content {
+        padding: 18px;
+    }
+
+    .hero {
+        padding: 22px;
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero-icon {
+        font-size: 65px;
+        margin-top: 15px;
+    }
+
+    .cards,
+    .columns {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="layout">
+
+    <!-- LEFT MENU -->
+    <aside class="sidebar">
+        <div class="logo">
+            ♻ EcoCollect
+            <span>E-WASTE MANAGEMENT</span>
+        </div>
+
+        <h4>Main Menu</h4>
+
+        <div class="nav-list">
+            <button class="nav-btn active" data-page="home">⌂ Home</button>
+            <button class="nav-btn" data-page="about">ⓘ About E-Waste</button>
+            <button class="nav-btn" data-page="services">▦ Services</button>
+            <button class="nav-btn" data-page="advantages">＋ Advantages</button>
+            <button class="nav-btn" data-page="disadvantages">! Disadvantages</button>
+            <button class="nav-btn" data-page="pickup">♧ Request Pickup</button>
+        </div>
+    </aside>
+
+    <!-- RIGHT SIDE -->
+    <div class="main">
+        <header class="topbar">
+            <h2 id="page-title">Home</h2>
+            <span class="tag">Student Project Demo</span>
+        </header>
+
+        <main class="content">
+
+            <!-- HOME -->
+            <section class="page active" id="home">
+                <div class="hero">
+                    <div class="hero-text">
+                        <span class="eyebrow">Recycle today, protect tomorrow</span>
+                        <h1>Give E-Waste a Better Future</h1>
+                        <p>
+                            EcoCollect is an e-waste management platform concept
+                            that helps people learn about electronic waste and
+                            explore responsible collection and recycling.
+                        </p>
+                        <button class="action" data-go="pickup">
+                            Request Pickup
+                        </button>
+                        <button class="action" data-go="about">
+                            Learn More
+                        </button>
+                    </div>
+                    <div class="hero-icon">♻️</div>
+                </div>
+
+                <h2 class="section-title">Explore EcoCollect</h2>
+
+                <div class="cards">
+                    <div class="card">
+                        <div class="icon">💻</div>
+                        <h3>About E-Waste</h3>
+                        <p>Understand electronic waste and its impact on our environment.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">🚚</div>
+                        <h3>Collection Services</h3>
+                        <p>Explore the proposed collection and recycling services.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">🌱</div>
+                        <h3>Green Future</h3>
+                        <p>Encourage responsible disposal, reuse, and recycling.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section class="page" id="about">
+                <span class="eyebrow">Learn the basics</span>
+                <h1>About E-Waste</h1>
+                <p>
+                    E-waste means discarded electrical and electronic equipment.
+                    Examples include old mobile phones, computers, televisions,
+                    chargers, keyboards, and printers.
+                </p>
+
+                <div class="cards">
+                    <div class="card">
+                        <div class="icon">📱</div>
+                        <h3>Examples</h3>
+                        <p>Phones, laptops, computers, chargers, cables, and monitors.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">⚠️</div>
+                        <h3>The Problem</h3>
+                        <p>Improper handling can release harmful materials and pollute soil or water.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">♻️</div>
+                        <h3>The Solution</h3>
+                        <p>Use appropriate collection points and authorized recyclers.</p>
+                    </div>
+                </div>
+
+                <div class="notice">
+                    Safety tip: Back up your files and remove personal data
+                    before handing over an old phone or computer. Do not
+                    dismantle batteries yourself.
+                </div>
+            </section>
+
+            <!-- SERVICES -->
+            <section class="page" id="services">
+                <span class="eyebrow">Our proposed features</span>
+                <h1>Services</h1>
+                <p>EcoCollect proposes the following services for e-waste awareness and management.</p>
+
+                <div class="cards">
+                    <div class="card">
+                        <div class="icon">🚚</div>
+                        <h3>Pickup Request</h3>
+                        <p>Submit a sample request for unwanted electronic devices.</p>
+                        <button class="action" data-go="pickup">Open Form</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">♻️</div>
+                        <h3>Recycling Guidance</h3>
+                        <p>Learn how to find suitable and authorized recycling options.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">📚</div>
+                        <h3>Awareness</h3>
+                        <p>Learn about safe handling, reuse, repair, and recycling.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">📍</div>
+                        <h3>Collection Locations</h3>
+                        <p>A future version could show verified collection locations near users.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">🔐</div>
+                        <h3>Data Safety</h3>
+                        <p>Remind users to protect personal information before recycling devices.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">📊</div>
+                        <h3>Request Tracking</h3>
+                        <p>A future database could store requests and show their status.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ADVANTAGES -->
+            <section class="page" id="advantages">
+                <span class="eyebrow">Benefits</span>
+                <h1>Advantages of EcoCollect</h1>
+                <p>
+                    EcoCollect can make e-waste information and collection
+                    guidance easier to access.
+                </p>
+
+                <div class="cards">
+                    <div class="card">
+                        <div class="icon">🌍</div>
+                        <h3>Environmental Protection</h3>
+                        <p>Encourages proper disposal instead of dumping or burning electronics.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">♻️</div>
+                        <h3>Resource Recovery</h3>
+                        <p>Supports recovery of reusable materials from old electronics.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">🧠</div>
+                        <h3>Public Awareness</h3>
+                        <p>Educates people about the importance of e-waste management.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">⏱️</div>
+                        <h3>Convenience</h3>
+                        <p>Offers a central place to explore information and submit enquiries.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">🔧</div>
+                        <h3>Reuse and Repair</h3>
+                        <p>Can encourage repairing or reusing devices that are still useful.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="icon">💼</div>
+                        <h3>Future Opportunities</h3>
+                        <p>A complete platform could support recycling partners and related jobs.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DISADVANTAGES -->
+            <section class="page" id="disadvantages">
+                <span class="eyebrow">Limitations and challenges</span>
+                <h1>Disadvantages</h1>
+                <p>
+                    A real e-waste platform needs money, reliable partners,
+                    safe collection processes, and good data protection.
+                </p>
+
+                <div class="columns">
+                    <div class="info-box disadvantages">
+                        <h3>Possible Challenges</h3>
+                        <ul>
+                            <li><strong>Collection costs:</strong> Transport and handling can be expensive.</li>
+                            <li><strong>Limited coverage:</strong> Collection partners may not serve every area.</li>
+                            <li><strong>Technical cost:</strong> A full system needs hosting, a database, and maintenance.</li>
+                            <li><strong>Privacy risk:</strong> Personal information must be protected.</li>
+                            <li><strong>Internet access:</strong> Some users may not be comfortable using websites.</li>
+                            <li><strong>Trust:</strong> Users need confidence that devices go to responsible recyclers.</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box advantages">
+                        <h3>Ways to Improve</h3>
+                        <ul>
+                            <li>Partner with verified collection and recycling organizations.</li>
+                            <li>Clearly show service areas and any collection fees.</li>
+                            <li>Use secure systems and collect only necessary user information.</li>
+                            <li>Offer offline or phone-based help where possible.</li>
+                            <li>Keep collection details accurate and updated.</li>
+                            <li>Add tracking after connecting a database and backend.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="notice">
+                    These are possible implementation challenges of the platform.
+                    They do not mean that responsible recycling itself is harmful.
+                </div>
+            </section>
+
+            <!-- PICKUP FORM -->
+            <section class="page" id="pickup">
+                <span class="eyebrow">Student demo form</span>
+                <h1>Request E-Waste Pickup</h1>
+                <p>Enter sample details to test how a collection request form works.</p>
+
+                <form id="pickup-form">
+                    <label for="name">Full Name</label>
+                    <input id="name" type="text" placeholder="Enter your name" required>
+
+                    <label for="email">Email Address</label>
+                    <input id="email" type="email" placeholder="Enter your email" required>
+
+                    <label for="device">Device Type</label>
+                    <select id="device" required>
+                        <option value="">Select a device</option>
+                        <option>Mobile Phone</option>
+                        <option>Laptop / Computer</option>
+                        <option>Charger / Cables</option>
+                        <option>Television / Monitor</option>
+                        <option>Printer / Keyboard</option>
+                        <option>Other Electronic Item</option>
+                    </select>
+
+                    <label for="area">City / Area</label>
+                    <input id="area" type="text" placeholder="Enter your city or area" required>
+
+                    <label for="details">Additional Details (Optional)</label>
+                    <textarea id="details" rows="3" placeholder="Enter any extra details"></textarea>
+
+                    <button class="action" type="submit">Create Demo Request</button>
+
+                    <div id="result" role="status"></div>
+
+                    <div class="notice">
+                        This is a front-end demonstration only. It does not send
+                        information to a server or book a real pickup. Use sample
+                        details when testing.
+                    </div>
+                </form>
+            </section>
+
+            <footer>
+                EcoCollect — E-Waste Collection and Management Platform |
+                First-Year CSE Project Demo
+            </footer>
+        </main>
+    </div>
+</div>
+
+<script>
+const titles = {
+    home: "Home",
+    about: "About E-Waste",
+    services: "Services",
+    advantages: "Advantages",
+    disadvantages: "Disadvantages",
+    pickup: "Request Pickup"
+};
+
+function openPage(pageId) {
+    document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    document.querySelectorAll(".nav-btn").forEach(function(button) {
+        button.classList.toggle("active", button.dataset.page === pageId);
+    });
+
+    document.getElementById("page-title").textContent = titles[pageId];
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+document.querySelectorAll(".nav-btn").forEach(function(button) {
+    button.addEventListener("click", function() {
+        openPage(button.dataset.page);
+    });
+});
+
+document.querySelectorAll("[data-go]").forEach(function(button) {
+    button.addEventListener("click", function() {
+        openPage(button.dataset.go);
+    });
+});
+
+document.getElementById("pickup-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const requestId = "ECO-" + Math.floor(100000 + Math.random() * 900000);
+    const result = document.getElementById("result");
+
+    result.style.display = "block";
+    result.textContent =
+        "Demo request created! Sample ID: " + requestId +
+        ". No real pickup was booked and no information was sent.";
+
+    this.reset();
+});
+</script>
+
+</body>
+</html>
